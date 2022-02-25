@@ -4,9 +4,13 @@ import MentionsTagsComponent from './MentionsTagsComponent';
 
 
 const Modals = ( props ) => {
-  const [hashtags, setHashtags] = useState('');
-  const [mentions, setMentions] = useState('');
-  const [description, setDescription] = useState('');
+  const [hashtags, setHashtags] = useState(state.hashtags);
+  const [mentions, setMentions] = useState(state.mentions);
+  const [description, setDescription] = useState(state.description);
+  const [email, setEmail] = useState(state.email);
+  const [firstname, setFirstname] = useState(state.firstname);
+  const [lastname, setLastname] = useState(state.lastname);
+  const [phoneNumber, setPhoneNumber] = useState(state.phoneNumber);
 
   
   const deletePic = () => {
@@ -31,11 +35,12 @@ const Modals = ( props ) => {
 
   const updateProfile = () => {
     let tmp = state.profileData;
-    tmp.email = state.email;
-    tmp.firstname = state.firstname;
-    tmp.lastname = state.lastname;
-    tmp.phoneNumber = state.phoneNumber;
-    this.setState({ profileData: tmp, editProfilModal: false });
+    tmp.email = email;
+    tmp.firstname = firstname;
+    tmp.lastname = lastname;
+    tmp.phoneNumber = phoneNumber;
+    state.profileData = tmp;
+    props.closeEditProfilModal();
     message.success('Profile well updated', 3);
   }
 
@@ -44,7 +49,7 @@ const Modals = ( props ) => {
       <Modal 
         width={520} 
         visible={props.previewPublicationModal} 
-        onCancel={ () => props.closePreview() }
+        onCancel={ () => props.setPreviewPublicationModal(false) }
         footer={
           <Row type="flex">
             <Col span={12} className="text-center">
@@ -93,7 +98,7 @@ const Modals = ( props ) => {
         </Row>
       </Modal>
 
-{/*       <Modal title="Upload a picture" okText="Upload" visible={props.uploadModal} onOk={uploadPicture} onCancel={() => props.closeUploadModal(false)}>
+      <Modal title="Upload a picture" okText="Upload" visible={props.uploadModal} onOk={uploadPicture} onCancel={() => props.setUploadModal(false)}>
         <Row type="flex" justify="center" className="input-container">
           <Col span={20}>
             <b>Description:</b>
@@ -104,32 +109,32 @@ const Modals = ( props ) => {
         <MentionsTagsComponent type="tags" value={hashtags} title="Hashtags" setValue={updateHashtags} />
       </Modal>
 
-      <Modal title="Edit your account" okText="Update" visible={props.editProfilModal} onOk={updateProfile} onCancel={() => closeEditProfilModal}>
+      <Modal title="Edit your account" okText="Update" visible={props.editProfilModal} onOk={updateProfile} onCancel={() => props.setEditProfilModal(false)}>
         <Row type="flex" justify="center" className="input-container">
           <Col span={20}>
             <b>EMail</b>
-            <Input id="email" type="text" value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })} />
+            <Input id="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
           </Col>
         </Row>
         <Row type="flex" justify="center" className="input-container">
           <Col span={20}>
             <b>Firstname</b>
-            <Input id="firstname" type="text" value={this.state.firstname} onChange={(e) => this.setState({ firstname: e.target.value })} />
+            <Input id="firstname" type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
           </Col>
         </Row>
         <Row type="flex" justify="center" className="input-container">
           <Col span={20}>
             <b>Lastname</b>
-            <Input id="lastname" type="text" value={this.state.lastname} onChange={(e) => this.setState({ lastname: e.target.value })} />
+            <Input id="lastname" type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} />
           </Col>
         </Row>
         <Row type="flex" justify="center" className="input-container">
           <Col span={20}>
             <b>Phone number</b>
-            <Input id="email" type="text" value={this.state.phoneNumber} onChange={(e) => this.setState({ phoneNumber: e.target.value })} />
+            <Input id="email" type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           </Col>
         </Row>
-      </Modal> */}
+      </Modal>
     </>
   );
 };

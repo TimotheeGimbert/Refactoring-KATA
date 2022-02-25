@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Card, Col, Icon, Row } from 'antd/es';
 import Modals from './Modals';
+import Data from './data.json';
 
 
 const App = () => {
@@ -10,44 +11,7 @@ const App = () => {
   const [editProfilModal, setEditProfilModal] = useState(false);
   const [uploadModal, setUploadModal] = useState(false);
 
-  const state = {
-    email: 'myprofile@thp.fr',
-    phoneNumber: '0601020304',
-    firstname: 'TheHacking',
-    lastname: 'Project',
-    profileData: {
-      username: 'RefactoProject',
-      email: 'myprofile@thp.fr',
-      phoneNumber: '0601020304',
-      createdAt: '2020-02-23T07:50:17.335Z',
-      firstname: 'TheHacking',
-      lastname: 'Project',
-      profilePicture: 'https://blog.thehackingproject.org/wp-content/uploads/2019/03/short_white-1.png',
-      posts: [
-        {
-          imageUrl: 'https://f1.pngfuel.com/png/951/574/485/react-logo-javascript-redux-vuejs-angular-angularjs-expressjs-front-and-back-ends-png-clip-art.png',
-          description: 'This is a Javascript logo',
-          hashtags: ['#Javascript', '#reactJS'],
-          mentions: ['TheHackingProject'],
-          id: 1,
-        },
-        {
-          imageUrl: 'https://www.tuannguyen.tech/wp-content/uploads/2019/01/react.png',
-          description: 'This is the React logo',
-          hashtags: ['#React', '#formation'],
-          mentions: ['THP'],
-          id: 2,
-        },
-        {
-          imageUrl: 'https://avatars2.githubusercontent.com/u/25484553?s=200&v=4',
-          description: 'The Hacking Project logo',
-          hashtags: ['#THP', '#TheHackingProject'],
-          mentions: ['youhou', 'week7'],
-          id: 3,
-        }
-      ]
-    }
-  }  
+  const profile = Data.profileData;
 
   const formatDate = (date) => {
     const newDate = new Date(date);
@@ -59,29 +23,17 @@ const App = () => {
     setPreviewPublicationModal(true);
   }
 
-  const closePreview = () => {
-    setPreviewPublicationModal(false);
-  }
-
-  const closeUploadModal = () => {
-    setUploadModal(false);
-  }
-
-  const closeEditProfilModal = () => {
-    setEditProfilModal(false);
-  }
-
 
   return (
     <div style={{ margin: 50 }}>
       <Modals 
         previewItem={previewItem} 
         previewPublicationModal={previewPublicationModal} 
-        closePreview={closePreview}
+        setPreviewPublicationModal={setPreviewPublicationModal}
         uploadModal={uploadModal}
-        closeUploadModal={closeUploadModal}
+        setUploadModal={setUploadModal}
         editProfilModal={editProfilModal}
-        closeEditProfilModal={closeEditProfilModal}
+        setEditProfilModal={setEditProfilModal}
         
       />
       <Row type="flex" align="middle" justify="center">
@@ -91,25 +43,25 @@ const App = () => {
               <Col md={14} sm={16} xs={24}>
                 <Row type="flex" justify="space-between">
                   <Col span={10} className="text-center">
-                    <Avatar size={100} icon="user" className="profil-pic" src={state.profileData.profilePicture} />
-                    <h3>{`${state.profileData.firstname} ${state.profileData.lastname}`}</h3>
+                    <Avatar size={100} icon="user" className="profil-pic" src={profile.profilePicture} />
+                    <h3>{`${profile.firstname} ${profile.lastname}`}</h3>
                   </Col>
                   <Col span={10}>
                     <p>
                       <Icon type="user" className="p-icon" />
-                      {state.profileData.username}
+                      {profile.username}
                     </p>
                     <p>
                       <Icon type="mail" className="p-icon" />
-                      {state.profileData.email}
+                      {profile.email}
                     </p>
                     <p>
                       <Icon type="phone" className="p-icon" />
-                      {state.profileData.phoneNumber}
+                      {profile.phoneNumber}
                     </p>
                     <p>
                       <Icon type="calendar" className="p-icon" />
-                      {formatDate(state.profileData.createdAt)}
+                      {formatDate(profile.createdAt)}
                     </p>
                   </Col>
                 </Row>
@@ -132,13 +84,13 @@ const App = () => {
               <span className="span-icon">Publications</span>
             </h2>
             <Card bordered className="card-pubs" onClick={() => openPreview(0)}>
-              <img src={state.profileData.posts[0].imageUrl} width={200} height={200} alt={state.profileData.posts[0].imageUrl} />
+              <img src={profile.posts[0].imageUrl} width={200} height={200} alt={profile.posts[0].imageUrl} />
             </Card>
             <Card bordered className="card-pubs" onClick={() => openPreview(1)}>
-              <img src={state.profileData.posts[1].imageUrl} width={200} height={200} alt={state.profileData.posts[1].imageUrl} />
+              <img src={profile.posts[1].imageUrl} width={200} height={200} alt={profile.posts[1].imageUrl} />
             </Card>
             <Card bordered className="card-pubs" onClick={() => openPreview(2)}>
-              <img src={state.profileData.posts[2].imageUrl} width={200} height={200} alt={state.profileData.posts[2].imageUrl} />
+              <img src={profile.posts[2].imageUrl} width={200} height={200} alt={profile.posts[2].imageUrl} />
             </Card>
           </Col>
         </Col>
@@ -146,7 +98,5 @@ const App = () => {
     </div>
   )
 }
-
-
 
 export default App;
