@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Col, Row, Modal, List, Tag, Input, message } from 'antd/es';
+import { Col, Row, Modal, Input, message } from 'antd/es';
 import MentionsTagsComponent from './MentionsTagsComponent';
+import Data from './data.json';
 
 
 const Modals = ( props ) => {
-  const [hashtags, setHashtags] = useState(state.hashtags);
+  const [hashtags, setHashtags] = useState(Data.hashtags);
   const [mentions, setMentions] = useState(state.mentions);
   const [description, setDescription] = useState(state.description);
   const [email, setEmail] = useState(state.email);
@@ -13,13 +14,7 @@ const Modals = ( props ) => {
   const [phoneNumber, setPhoneNumber] = useState(state.phoneNumber);
 
   
-  const deletePic = () => {
-    alert("Je supprime la publcation avec l'id : " + posts[props.previewItem].id);
-  }
 
-  const updatePic = () => {
-    alert("J'update la publcation avec l'id : " + posts[props.previewItem].id);
-  }
 
   const uploadPicture = () => {
     alert("J'upload une image avec la description : " + description + " et les hashtags " + hashtags + " et les mentions " + mentions);
@@ -34,70 +29,12 @@ const Modals = ( props ) => {
   }
 
   const updateProfile = () => {
-    let tmp = state.profileData;
-    tmp.email = email;
-    tmp.firstname = firstname;
-    tmp.lastname = lastname;
-    tmp.phoneNumber = phoneNumber;
-    state.profileData = tmp;
     props.closeEditProfilModal();
     message.success('Profile well updated', 3);
   }
 
   return (
     <>
-      <Modal 
-        width={520} 
-        visible={props.previewPublicationModal} 
-        onCancel={ () => props.setPreviewPublicationModal(false) }
-        footer={
-          <Row type="flex">
-            <Col span={12} className="text-center">
-              <Button type="ghost" icon="edit" onClick={updatePic}>Edit</Button>
-            </Col>
-            <Col span={12} className="text-center">
-              <Button type="danger" icon="delete" onClick={deletePic}>Delete</Button>
-            </Col>
-          </Row>
-        }
-      >
-        <Row type="flex" align="middle">
-          <Col xs={24} md={12} className="text-center">
-            <img src={posts[props.previewItem].imageUrl} width={200} height={200} alt={posts[props.previewItem].description} />
-          </Col>
-          <Col xs={24} md={12}>
-            <div>
-              <b>Description: </b>
-              <p>{posts[props.previewItem].description}</p>
-            </div>
-            <div>
-              <b>Hashtag:</b>
-              <List
-                grid={{ gutter: 16, column: 2 }}
-                dataSource={posts[props.previewItem].hashtags}
-                renderItem={(tag) => (
-                  <List.Item>
-                    <Tag>{`${tag}`}</Tag>
-                  </List.Item>
-                )}
-              />
-            </div>
-            <div>
-              <b>Mention:</b>
-              <List
-                grid={{ gutter: 16, column: 2 }}
-                dataSource={posts[props.previewItem].mentions}
-                renderItem={(user) => (
-                  <List.Item>
-                    <Tag>{`@${user}`}</Tag>
-                  </List.Item>
-                )}
-              />
-            </div>
-          </Col>
-        </Row>
-      </Modal>
-
       <Modal title="Upload a picture" okText="Upload" visible={props.uploadModal} onOk={uploadPicture} onCancel={() => props.setUploadModal(false)}>
         <Row type="flex" justify="center" className="input-container">
           <Col span={20}>
@@ -154,29 +91,5 @@ const state = {
     profilePicture: 'https://blog.thehackingproject.org/wp-content/uploads/2019/03/short_white-1.png',
   }
 }
-
-const posts = [
-  {
-    imageUrl: 'https://f1.pngfuel.com/png/951/574/485/react-logo-javascript-redux-vuejs-angular-angularjs-expressjs-front-and-back-ends-png-clip-art.png',
-    description: 'This is a Javascript logo',
-    hashtags: ['#Javascript', '#reactJS'],
-    mentions: ['TheHackingProject'],
-    id: 1,
-  },
-  {
-    imageUrl: 'https://www.tuannguyen.tech/wp-content/uploads/2019/01/react.png',
-    description: 'This is the React logo',
-    hashtags: ['#React', '#formation'],
-    mentions: ['THP'],
-    id: 2,
-  },
-  {
-    imageUrl: 'https://avatars2.githubusercontent.com/u/25484553?s=200&v=4',
-    description: 'The Hacking Project logo',
-    hashtags: ['#THP', '#TheHackingProject'],
-    mentions: ['youhou', 'week7'],
-    id: 3,
-  }
-];
 
 export default Modals;

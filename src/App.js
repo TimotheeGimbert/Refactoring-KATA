@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import { Avatar, Button, Card, Col, Icon, Row } from 'antd/es';
 import Modals from './Modals';
 import Data from './data.json';
+import Publication from './Components/Publication';
 
 
 const App = () => {
-  const [previewPublicationModal, setPreviewPublicationModal] = useState(false);
-  const [previewItem, setPreviewItem] = useState(0);
   const [editProfilModal, setEditProfilModal] = useState(false);
   const [uploadModal, setUploadModal] = useState(false);
 
@@ -18,24 +17,15 @@ const App = () => {
     return `${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}`;
   }
 
-  const openPreview = (postNumber) => {
-    setPreviewItem(postNumber);
-    setPreviewPublicationModal(true);
-  }
-
-
   return (
     <div style={{ margin: 50 }}>
       <Modals 
-        previewItem={previewItem} 
-        previewPublicationModal={previewPublicationModal} 
-        setPreviewPublicationModal={setPreviewPublicationModal}
         uploadModal={uploadModal}
         setUploadModal={setUploadModal}
         editProfilModal={editProfilModal}
-        setEditProfilModal={setEditProfilModal}
-        
+        setEditProfilModal={setEditProfilModal} 
       />
+
       <Row type="flex" align="middle" justify="center">
         <Col sm={16} xs={24}>
           <Card bordered>
@@ -76,6 +66,7 @@ const App = () => {
           </Card>
         </Col>
       </Row>
+
       <Row type="flex" justify="center">
         <Col sm={18} xs={24}>
           <Col span={24} className="container text-center">
@@ -83,15 +74,9 @@ const App = () => {
               <Icon type="save" />
               <span className="span-icon">Publications</span>
             </h2>
-            <Card bordered className="card-pubs" onClick={() => openPreview(0)}>
-              <img src={profile.posts[0].imageUrl} width={200} height={200} alt={profile.posts[0].imageUrl} />
-            </Card>
-            <Card bordered className="card-pubs" onClick={() => openPreview(1)}>
-              <img src={profile.posts[1].imageUrl} width={200} height={200} alt={profile.posts[1].imageUrl} />
-            </Card>
-            <Card bordered className="card-pubs" onClick={() => openPreview(2)}>
-              <img src={profile.posts[2].imageUrl} width={200} height={200} alt={profile.posts[2].imageUrl} />
-            </Card>
+            <Publication id={0}/>
+            <Publication id={1}/>
+            <Publication id={2}/>
           </Col>
         </Col>
       </Row>
