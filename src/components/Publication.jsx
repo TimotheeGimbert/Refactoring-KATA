@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Data from '../data.json';
+import Data from '../assets/data.json';
 import { Modal, List, Tag, Button, Card, Col, Row } from 'antd/es';
 
 const Publication = ( {id} ) => {
